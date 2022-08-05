@@ -1,0 +1,163 @@
+﻿<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.master.vb" Inherits="DOHPricing.SiteMaster" %>
+
+<%@ Import Namespace="DOHPricing" %>
+<%@ Import Namespace="Microsoft.AspNet.Identity" %>
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - DOH Management Application</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <asp:HiddenField runat="server" ID="hfPosition" Value="" />
+        <script type="text/javascript">
+            $(function () {
+                var f = $("#<%=hfPosition.ClientID%>");
+                window.onload = function () {
+                    var position = parseInt(f.val());
+                    if (!isNaN(position)) {
+                        $(window).scrollTop(position);
+                    }
+                };
+                window.onscroll = function () {
+                    var position = $(window).scrollTop();
+                    f.val(position);
+                };
+            });
+        </script>
+        <div class="navbar navbar-inverse navbar-fixed-top " >
+            <div class="container">
+                 
+                <div class="navbar-collapse collapse">
+
+               
+                    <div class="navbar-header ">
+                            
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" runat="server" href="~/">DOH Management</a>
+                         
+                    </div>
+
+
+
+                    <div class="col-sm-9 col-md-9 col-lg-9">
+                        <asp:Menu ID="MenuNav" runat="server" Orientation="Horizontal" CssClass="nav navbar" StaticMenuStyle-CssClass="nav navbar-nav  h4" DynamicMenuStyle-CssClass="dropdown-menu" IncludeStyleBlock="false" SkipLinkText="" RenderingMode="List" DynamicMenuItemStyle-CssClass="h4 dropdown">
+
+                            <DynamicMenuItemStyle CssClass="h4 dropdown"></DynamicMenuItemStyle>
+
+                            <DynamicMenuStyle CssClass="dropdown-menu"></DynamicMenuStyle>
+
+                            <Items>
+
+                                <asp:MenuItem NavigateUrl="~/Materials/Materials.aspx" Text="Materials" Value="Materials"></asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Products/Products.aspx" Text="Products" Value="Products">
+                                    <asp:MenuItem NavigateUrl="~/Products/Products.aspx" Text="Products" Value="Products"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Products/Price.aspx" Text="Costing" Value="Costing"></asp:MenuItem>
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/Customer/Customer.aspx" Text="Customers" Value="Customer"></asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/" Text="Shipping" Value="Shipping">
+                                    <asp:MenuItem NavigateUrl="~/Shipping/Buyer.aspx" Text="Buyer" Value="Shipping"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Shipping/Consignee.aspx" Text="Consignee" Value="Shipping"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Shipping/Shipper.aspx" Text="Shipper" Value="Shipping"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Shipping/NewDocs.aspx" Text="Create Shipping Documents" Value="Shipping"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Shipping/ViewDocs.aspx" Text="View Shipping Documents" Value="Shipping"></asp:MenuItem>
+
+                                    <asp:MenuItem NavigateUrl="~/Shipping/Terms.aspx" Text="Terms Of Payment" Value="Shipping"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Shipping/TermsDelivery.aspx" Text="Terms Of Delivery" Value="Shipping"></asp:MenuItem>
+
+                                    <asp:MenuItem NavigateUrl="~/Shipping/Mode.aspx" Text="Modes of Transport" Value="Shipping"></asp:MenuItem>
+
+                                </asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/" Text="Reports" Value="Reports">
+                                    <asp:MenuItem NavigateUrl="~/Reports/ProductReport.aspx" Text="Products" Value="ProductReport" ></asp:MenuItem>
+
+                                </asp:MenuItem>
+
+
+                                <asp:MenuItem Text="ADMIN" Value="Admin">
+                                    <asp:MenuItem NavigateUrl="~/Admin/AdminControls.aspx" Text="Admin Controls" Value="Admin"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Admin/RoleManagement.aspx" Text="Role Management" Value="Admin"></asp:MenuItem>
+                                </asp:MenuItem>
+                            </Items>
+
+                            <StaticMenuStyle CssClass="nav navbar-nav  h4"></StaticMenuStyle>
+                        </asp:Menu>
+                    </div>
+                
+                </div>
+              
+            </div>
+
+        </div>
+     
+
+
+
+        <br />
+
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                  <h6 >
+                            <asp:LoginView runat="server" ViewStateMode="Disabled">
+                                <AnonymousTemplate>
+                                    <ul class="nav navbar-nav  navbar-right navbar-static-top">
+                                        <li><a runat="server" href="~/Account/Register">Register</a></li>
+                                        <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                                    </ul>
+                                </AnonymousTemplate>
+                                <LoggedInTemplate>
+                                    <ul class="nav navbar-nav  navbar-right navbar-static-top">
+                                        <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %>!</a></li>
+                                        <li>
+                                            <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                        </li>
+                                    </ul>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+
+                        </h6> 
+                <p>&copy; <%: DateTime.Now.Year %> - DOH Management</p>
+            </footer>
+        </div>
+    </form>
+</body>
+</html>
